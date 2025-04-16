@@ -40,7 +40,6 @@ class Monster extends Phaser.Scene {
         this.leftEarX = this.bodyX - 100;
         this.leftEarY = this.bodyY - 60;
 
-        this.smileType = 'Smile';
     }
 
     // Use preload to load art and sound assets before the scene starts running.
@@ -133,6 +132,18 @@ class Monster extends Phaser.Scene {
 
     update() {
         let my = this.my;    // create an alias to this.my for readability
+        //alternate way - defining a Phaser Container 
+        //wrap all your sprite parts in a Phaser.GameObjects.Container and move that container
+        //in create() - this.monsterContainer = this.add.container(x,y);
+        //in create() - add parts after creating them - 
+        // my.sprite.body = this.add.sprite(...);
+        // this.monsterContainer.add(my.sprite.body);
+        // repeat with all other parts like RightArm etc
+        // in update() move the container
+        // replace for loop with if logic and just this.monsterContainer.x -= 2;
+        // best practice is this option since its cleaner and lets you treat monster like a single object
+        // treating like single object makes it easier to implement other behaviors too
+        //method belong can get messy and error-prone as monster gets more complex
         for (let part in my.sprite) {
             if (this.aKey.isDown) {
                 my.sprite[part].x -= 2;
